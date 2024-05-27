@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carrello</title>
+    <link rel="icon" type="image/x-icon" href="assets/icons/favicon.ico">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css">
+    <style>
+        /* Stili globali */
+        body {
+            background-color: #f8f9fa;
+            padding: 20px;
+            animation: transitionIn 2.00s;
+        }
+        /* Stili del contenitore principale */
+        .container {
+            max-width: 600px;
+            margin: auto;
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin-top: 20px;
+        }
+        /* Stili del singolo prodotto nel carrello */
+        .product {
+            margin-bottom: 10px;
+        }
+        /* Stili del pulsante di checkout */
+        .btn-primary {
+            width: 100%;
+        }
+        /* Animazione di transizione */
+        @keyframes transitionIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Carrello</h2>
+        <!-- Div per visualizzare i prodotti nel carrello -->
+        <div id="carrello"></div>
+        <!-- Visualizzazione del totale del carrello -->
+        <p>Totale: €<span id="totale">0.00</span></p>
+        <!-- Pulsante per il checkout -->
+        <button id="checkoutButton" class="btn btn-primary">Checkout</button>
+        <!-- Pulsante per tornare alla home page -->
+        <button class="btn btn-primary mt-3" onclick="location.href='Homepage.html'">Torna alla home page</button>
+    </div>
+
+    <!-- Modal per l'inserimento dei dettagli della carta -->
+    <div class="modal fade" id="checkoutModal" tabindex="-1" aria-labelledby="checkoutModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="checkoutModalLabel">Checkout</h5>
+                    <!-- Pulsante per chiudere il modal -->
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <!-- Form per l'inserimento dei dettagli di pagamento -->
+                    <form id="paymentForm">
+                        <div class="mb-3">
+                            <label for="cardNumber">Numero della carta:</label>
+                            <input type="text" class="form-control" id="cardNumber" name="cardNumber" placeholder="Inserisci il numero della carta">
+                        </div>
+                        <div class="mb-3">
+                            <label for="accountName">Nome dell'destinario:</label>
+                            <input type="text" class="form-control" id="accountName" name="accountName" placeholder="Inserisci il nome dell'account">
+                        </div>
+                        <!-- Pulsante per confermare il pagamento -->
+                        <button type="submit" class="btn btn-primary">Conferma pagamento</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Inclusione di jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- Inclusione di Bootstrap JavaScript -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Recupera il carrello dal localStorage
+        var carrello = JSON.parse(localStorage.getItem('carrello')) || [];
+
+        // Funzione per visualizzare il carrello
+        function mostraCarrello() {
+            var carrelloHtml = "";
+            var totale = 0;
+            carrello.forEach(function (prodotto, index) {
+                // Genera l'HTML per ogni prodotto nel carrello
+                carrelloHtml += `<div class="product">
+                                    <p>${prodotto.nome} x ${prodotto.quantita} - €${(prodotto.prezzo * prodotto.quantita).toFixed(2)}</p>
+                                    <!-- Pulsante per rimuovere il prodotto dal carrello -->
+                                    <button class="btn btn-danger" onclick="rimuoviDalCarrello(${index})">Rimuovi</button>
+                                </div>`;
+                totale += prodotto.prezzo * prodotto.quantita;
+            });
+            // Aggiorna l'HTML del carrello e il totale
+            document.getElementById("carrello").innerHTML = carrelloHtml;
+            document.getElementById("totale").innerText = totale.toFixed(2);
+        }
+        // Chiama la funzione per mostrare il carrello
+        mostraCarrello();
+
+        // Funzione per rimuovere un prodotto dal carrello
+        function rimuoviDalCarrello(index) {
+            // Rimuovi il prodotto dal carrello e aggiorna il localStorage
+            carrello.splice(index, 1);
+            localStorage.setItem('carrello', JSON.stringify(carrello));
+            // Aggiorna la visualizzazione del carrello
+            mostraCarrello();
+        }
+
+        // Aggiungi un gestore per il click sul pulsante Checkout
+        document.getElementById('checkoutButton').addEventListener('click', function() {
+            // Mostra il modal del checkout
+            $('#checkoutModal').modal('show');
+        });
+
+        // Gestisci l'invio del modulo per il pagamento
+        document.getElementById('paymentForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            // Recupera i dettagli del pagamento
+            const cardNumber = document.getElementById('cardNumber').value;
+            const accountName = document.getElementById('accountName').value;
+
+            // Verifica se entrambi i campi sono compilati
+            if (!cardNumber || !accountName) {
+                alert("Si prega di compilare entrambi i campi.");
+                return;
+            }
+
+            // Verifica se la carta ha abbastanza denaro per coprire il totale dell'acquisto
+            const savedData = localStorage.getItem(cardNumber);
+            if (!savedData) {
+                alert("La carta specificata non esiste.");
+                return;
+            }
+            const data = JSON.parse(savedData);
+            const totalBalance = parseFloat(data.amount);
+            const totaleDaPagare = parseFloat(document.getElementById('totale').innerText);
+            if (totalBalance < totaleDaPagare) {
+                alert("La carta non ha abbastanza denaro per effettuare l'acquisto.");
+                return;
+            }
+
+            // Scalare il denaro dalla carta
+            data.amount -= totaleDaPagare;
+            localStorage.setItem(cardNumber, JSON.stringify(data));
+
+            // Esegui il pagamento
+            alert("Pagamento effettuato con successo!");
+
+            // Resetta il carrello
+            localStorage.removeItem('carrello');
+            carrello = [];
+            mostraCarrello();
+
+            // Chiudi il modal
+            $('#checkoutModal').modal('hide');
+        });
+    </script>
+</body>
+</html>

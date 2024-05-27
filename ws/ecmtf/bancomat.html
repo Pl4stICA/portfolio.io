@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bancomat</title>
+<link rel="icon" type="image/x-icon" href="assets/icons/favicon_2.ico">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<style>
+  /* Stili globali */
+  body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+  
+  /* Stili del contenitore principale */
+  .container {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+  }
+
+  /* Stili degli input */
+  input[type="text"], input[type="number"], input[type="password"], select {
+    width: 100%;
+    padding: 10px;
+    margin: 5px 0;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+
+  /* Stili del pulsante di invio */
+  input[type="submit"] {
+    width: 100%;
+    background-color: #4CAF50;
+    color: white;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+
+  input[type="submit"]:hover {
+    background-color: #45a049;
+  }
+
+  /* Stili del testo del saldo */
+  .balance {
+    margin-top: 20px;
+    text-align: center;
+    font-size: 18px;
+  }
+
+  /* Stili per le immagini */
+  img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 0 auto; /*centra l'immagine orizzontalmente*/
+  }
+</style>
+</head>
+<body>
+  <div class="container">
+    <!-- Immagine del titolo -->
+    <img src="assets/title/title_2.png" alt="Bank Icon">
+ 
+    <!-- Form per la ricarica -->
+    <form id="form">
+      <label for="cardNumber">Numero della carta:</label>
+      <input type="text" id="cardNumber" name="cardNumber" placeholder="Inserisci il numero della carta">
+
+      <label for="amount">Importo da caricare:</label>
+      <input type="number" id="amount" name="amount" placeholder="Inserisci l'importo">
+
+      <input type="submit" value="Carica">
+
+      <!-- Area per i messaggi di errore/successo -->
+      <div id="message"></div>
+      <!-- Visualizzazione del saldo -->
+      <div id="balance" class="balance"></div>
+      <!-- Pulsante per tornare alla homepage -->
+      <button class="btn btn-primary mt-3" type="button" onclick="location.href='Homepage.html'">Torna alla home page</button>
+    </form>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // Carica i dati memorizzati in localStorage se presenti
+      updateBalance();
+    });
+
+    document.getElementById('form').addEventListener('submit', function(event) {
+      event.preventDefault();
+      var cardNumber = document.getElementById('cardNumber').value;
+      var amount = parseFloat(document.getElementById('amount').value);
+      
+      // Esempio di validazione del numero della carta e dell'importo
+      if (cardNumber.length !== 16 || isNaN(cardNumber)) {
+        showMessage('Numero della carta non valido.');
+        return;
+      }
+
+      if (isNaN(amount) || amount <= 0) {
+        showMessage('Importo non valido.');
+        return;
+      }
+
+      // Recupera i dati dal localStorage per la carta specificata
+      var savedData = localStorage.getItem(cardNumber);
+      var totalBalance = 0;
+      if (savedData) {
+        var data = JSON.parse(savedData);
+        totalBalance = parseFloat(data.amount);
+      }
+
+      // Aggiorna il saldo totale con l'importo aggiunto
+      totalBalance += amount;
+
+      // Memorizza i dati aggiornati nel localStorage
+      var dataToStore = {
+        cardNumber: cardNumber,
+        amount: totalBalance
+      };
+      localStorage.setItem(cardNumber, JSON.stringify(dataToStore));
+
+      // Aggiorna il saldo e mostra un messaggio
+      updateBalance();
+      showMessage('Carta caricata con successo con ' + amount + '€.');
+    });
+
+    function updateBalance() {
+      var cardNumber = document.getElementById('cardNumber').value;
+      var savedData = localStorage.getItem(cardNumber);
+      if (savedData) {
+        var data = JSON.parse(savedData);
+        var totalBalance = parseFloat(data.amount);
+        document.getElementById('balance').innerText = 'Saldo totale: ' + totalBalance.toFixed(2) + '€';
+      } else {
+        document.getElementById('balance').innerText = ''; // Nascondi il saldo se non ci sono dati
+      }
+    }
+
+    function showMessage(message) {
+      document.getElementById('message').innerText = message;
+    }
+  </script>
+</body>
+</html>

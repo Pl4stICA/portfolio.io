@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dijkstra con 10 nodi</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        zoom: 82%;
+    }
+    #container {
+        display: flex;
+        margin: 20px;
+    }
+    #graph {
+        width: 50%;
+        height: 400px;
+        border: 1px solid #ccc;
+    }
+    #input-container {
+        width: 50%;
+        padding: 20px;
+    }
+    h2 {
+        margin-top: 0;
+    }
+    label {
+        display: block;
+        margin-bottom: 5px;
+    }
+    select, input[type="number"] {
+        width: calc(100% - 10px);
+        padding: 8px;
+        margin-bottom: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        box-sizing: border-box;
+    }
+    button {
+        width: calc(100% - 10px);
+        padding: 10px;
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+    button:hover {
+        background-color: #0056b3;
+    }
+    #output {
+        margin-top: 20px;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+    }
+</style>
+</head>
+<body>
+<div id="container">
+    <div id="graph"></div>
+    <div id="input-container">
+        <h2>Algoritmo di Dijkstra con 10 nodi orientati</h2>
+        <div>
+            <label for="startNode">Nodo Iniziale:</label>
+            <select id="startNode">
+                <option value="A">A</option>
+                <option value="B">B</option>
+                <option value="C">C</option>
+                <option value="D">D</option>
+                <option value="E">E</option>
+                <option value="F">F</option>
+                <option value="G">G</option>
+                <option value="H">H</option>
+                <option value="I">I</option>
+                <option value="J">J</option>
+            </select>
+        </div>
+        <div id="edges">
+            <div>
+                <label for="edgeAB">Da A - B:</label>
+                <input type="number" id="edgeAB" min="0">
+            </div>
+            <div>
+                <label for="edgeAC">Da A - C:</label>
+                <input type="number" id="edgeAC" min="0">
+            </div>
+            <div>
+                <label for="edgeAD">Da A - D:</label>
+                <input type="number" id="edgeAD" min="0">
+            </div>
+            <div>
+                <label for="edgeAE">Da A - E:</label>
+                <input type="number" id="edgeAE" min="0">
+            </div>
+            <div>
+                <label for="edgeBC">Da B - C:</label>
+                <input type="number" id="edgeBC" min="0">
+            </div>
+            <div>
+                <label for="edgeBD">Da B - D:</label>
+                <input type="number" id="edgeBD" min="0">
+            </div>
+            <div>
+                <label for="edgeBE">Da B - E:</label>
+                <input type="number" id="edgeBE" min="0">
+            </div>
+            <div>
+                <label for="edgeCD">Da C - D:</label>
+                <input type="number" id="edgeCD" min="0">
+            </div>
+            <div>
+                <label for="edgeCE">Da C - E:</label>
+                <input type="number" id="edgeCE" min="0">
+            </div>
+            <div>
+                <label for="edgeDE">Da D - E:</label>
+                <input type="number" id="edgeDE" min="0">
+            </div>
+
+
+            <div>
+                <label for="edgeAF">Da A - F:</label>
+                <input type="number" id="edgeAF" min="0">
+            </div>
+            <div>
+                <label for="edgeFG">Da F - G:</label>
+                <input type="number" id="edgeFG" min="0">
+            </div>
+            <div>
+                <label for="edgeFH">Da F - H:</label>
+                <input type="number" id="edgeFH" min="0">
+            </div>
+            <div>
+                <label for="edgeGH">Da G - H:</label>
+                <input type="number" id="edgeGH" min="0">
+            </div>
+            <div>
+                <label for="edgeGI">Da G - I:</label>
+                <input type="number" id="edgeGI" min="0">
+            </div>
+            <div>
+                <label for="edgeHI">Da H - I:</label>
+                <input type="number" id="edgeHI" min="0">
+            </div>
+            <div>
+                <label for="edgeHJ">Da H - J:</label>
+                <input type="number" id="edgeHJ" min="0">
+            </div>
+            <div>
+                <label for="edgeIJ">Da I - J:</label>
+                <input type="number" id="edgeIJ" min="0">
+            </div>
+        </div>
+        <button onclick="runDijkstra()">Calcola</button>
+        
+        <div>
+            <h3>Distanze:</h3>
+            <div id="distances"></div>
+        </div>
+        <div>
+            <h3>Cammini minimi:</h3>
+            <div id="paths"></div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/vis/4.21.0/vis.min.js"></script>
+<script>
+    var nodes = new vis.DataSet([
+        {id: 'A', label: 'A'},
+        {id: 'B', label: 'B'},
+        {id: 'C', label: 'C'},
+        {id: 'D', label: 'D'},
+        {id: 'E', label: 'E'},
+        {id: 'F', label: 'F'},
+        {id: 'G', label: 'G'},
+        {id: 'H', label: 'H'},
+        {id: 'I', label: 'I'},
+        {id: 'J', label: 'J'}
+    ]);
+
+    var edges = new vis.DataSet([
+        {from: 'A', to: 'B', arrows: 'to'},
+        {from: 'A', to: 'C', arrows: 'to'},
+        {from: 'A', to: 'D', arrows: 'to'},
+        {from: 'A', to: 'E', arrows: 'to'},
+        {from: 'B', to: 'C', arrows: 'to'},
+        {from: 'B', to: 'D', arrows: 'to'},
+        {from: 'B', to: 'E', arrows: 'to'},
+        {from: 'C', to: 'D', arrows: 'to'},
+        {from: 'C', to: 'E', arrows: 'to'},
+        {from: 'D', to: 'E', arrows: 'to'},
+        {from: 'A', to: 'F', arrows: 'to'},
+        {from: 'F', to: 'G', arrows: 'to'},
+        {from: 'F', to: 'H', arrows: 'to'},
+        {from: 'G', to: 'H', arrows: 'to'},
+        {from: 'G', to: 'I', arrows: 'to'},
+        {from: 'H', to: 'I', arrows: 'to'},
+        {from: 'H', to: 'J', arrows: 'to'},
+        {from: 'I', to: 'J', arrows: 'to'}
+    ]);
+
+    var container = document.getElementById('graph');
+    var data = {
+        nodes: nodes,
+        edges: edges
+    };
+    var options = {
+        layout: {
+            hierarchical: {
+                enabled: true,
+                direction: 'LR',
+                sortMethod: 'directed'
+            }
+        }
+    };
+    var network = new vis.Network(container, data, options);
+
+    function getGraph() {
+        const graph = {
+            'A': {},
+            'B': {},
+            'C': {},
+            'D': {},
+            'E': {},
+            'F': {},
+            'G': {},
+            'H': {},
+            'I': {},
+            'J': {},
+        };
+
+       
+        graph['A']['B'] = parseInt(document.getElementById('edgeAB').value) || Infinity;
+        graph['A']['C'] = parseInt(document.getElementById('edgeAC').value) || Infinity;
+        graph['A']['D'] = parseInt(document.getElementById('edgeAD').value) || Infinity;
+        graph['A']['E'] = parseInt(document.getElementById('edgeAE').value) || Infinity;
+        graph['B']['C'] = parseInt(document.getElementById('edgeBC').value) || Infinity;
+        graph['B']['D'] = parseInt(document.getElementById('edgeBD').value) || Infinity;
+        graph['B']['E'] = parseInt(document.getElementById('edgeBE').value) || Infinity;
+        graph['C']['D'] = parseInt(document.getElementById('edgeCD').value) || Infinity;
+        graph['C']['E'] = parseInt(document.getElementById('edgeCE').value) || Infinity;
+        graph['D']['E'] = parseInt(document.getElementById('edgeDE').value) || Infinity;
+
+        graph['A']['F'] = parseInt(document.getElementById('edgeAB').value) || Infinity;
+        graph['F']['G'] = parseInt(document.getElementById('edgeAC').value) || Infinity;
+        graph['F']['H'] = parseInt(document.getElementById('edgeAD').value) || Infinity;
+        graph['G']['H'] = parseInt(document.getElementById('edgeAE').value) || Infinity;
+        graph['G']['I'] = parseInt(document.getElementById('edgeBC').value) || Infinity;
+        graph['H']['I'] = parseInt(document.getElementById('edgeBD').value) || Infinity;
+        graph['H']['J'] = parseInt(document.getElementById('edgeBE').value) || Infinity;
+        graph['I']['J'] = parseInt(document.getElementById('edgeCD').value) || Infinity;
+      
+
+        return graph;
+    }
+
+    function dijkstra(graph, startNode) {
+        const distances = {};
+        const predecessors = {}; 
+        const visited = {};
+        for (let node in graph) {
+            distances[node] = Infinity;
+            predecessors[node] = null; 
+            visited[node] = false;
+        }
+        distances[startNode] = 0;
+
+        for (let i = 0; i < Object.keys(graph).length - 1; i++) {
+            const u = minDistance(distances, visited);
+            visited[u] = true;
+
+            for (let v in graph[u]) {
+                if (!visited[v] && distances[u] + graph[u][v] < distances[v]) {
+                    distances[v] = distances[u] + graph[u][v];
+                    predecessors[v] = u; 
+                }
+            }
+        }
+
+        return { distances, predecessors };
+    }
+
+    function minDistance(distances, visited) {
+        let min = Infinity;
+        let minNode = null;
+
+        for (let node in distances) {
+            if (!visited[node] && distances[node] < min) {
+                min = distances[node];
+                minNode = node;
+            }
+        }
+
+        return minNode;
+    }
+
+    function getPath(predecessors, node) {
+        const path = [];
+        while (predecessors[node] !== null) {
+            path.unshift(node);
+            node = predecessors[node];
+        }
+        return path;
+    }
+
+    function runDijkstra() {
+        const startNode = document.getElementById('startNode').value;
+        const graph = getGraph();
+        const { distances, predecessors } = dijkstra(graph, startNode);
+
+        let distancesOutput = "<div>";
+        let pathsOutput = "<div>";
+
+        
+        for (let node in distances) {
+            if (node !== startNode) {
+                const path = getPath(predecessors, node);
+                distancesOutput += "<p>Distanza dal nodo " + node + ": " + distances[node] + "</p>";
+                pathsOutput += "<p>Percorso al nodo " + node + ": " + path.join(' -> ') + "</p>";
+            }
+        }
+
+        distancesOutput += "</div>";
+        pathsOutput += "</div>";
+
+       
+        let otherPaths = [];
+        for (let node in distances) {
+            if (node !== startNode) {
+                const path = getPath(predecessors, node);
+                if (distances[node] === distances[path[path.length - 1]]) {
+                    otherPaths.push(path);
+                }
+            }
+        }
+
+        let otherPathsOutput = "";
+        if (otherPaths.length > 0) {
+            otherPathsOutput += "<h3>Altri cammini minimi:</h3>";
+            otherPaths.forEach(path => {
+                otherPathsOutput += "<div>" + path.join(' -> ') + "</div>";
+            });
+        }
+
+        document.getElementById('distances').innerHTML = distancesOutput;
+        document.getElementById('paths').innerHTML = pathsOutput + otherPathsOutput;
+    }
+</script>
+</body>
+</html>

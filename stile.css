@@ -1,0 +1,23 @@
+body {
+    font-family: 'Arial', sans-serif;
+    zoom: 125%;
+}
+
+.hero {
+    padding: 100px 0;
+}
+
+#about, #projects, #skills, #contact {
+    padding: 60px 0;
+}
+
+.card-img-top {
+    height: 200px;
+    object-fit: cover;
+}
+
+footer {
+    position: relative;
+    bottom: 0;
+    width: 100%;
+}

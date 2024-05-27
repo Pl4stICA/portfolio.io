@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TF Prime Steve</title>
+    <link rel="icon" type="image/x-icon" href="assets/icons/favicon.ico">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #f8f9fa;
+            padding: 20px;
+            animation: transitionIn 2.00s;
+        }
+        .container {
+            max-width: 600px;
+            margin: auto;
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin-top: 20px;
+        }
+        .product-img {
+            max-width: 100%;
+            height: auto;
+            margin-bottom: 20px;
+        }
+        .btn-primary {
+            width: 100%;
+        }
+        @keyframes transitionIn{
+   from{
+opacity: 0;
+transform: rotateX(-10deg);
+   }
+   to{
+    opacity: 1;
+transform: rotateX(-10deg);
+
+   }
+}
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>TF Prime Steve</h2>
+        <img src="assets/items/steve.jpg" class="product-img" alt="Immagine Prodotto">
+        <p>Steve has no canonical appearance in Transformers: Prime or the aligned continuity outside of the Robots in Disguise Comic series. The information below is meant to give "identity" to memorable Vehicons as if they were one character, with the "Waspinator immortality" idea as a way to make the many "deaths" be the same character, surviving even when blown to pieces. Steve has also been seen with at least one other Vehicon, so the other Vehicon will be referred to as "Gary"</p>
+        <p>Prezzo: €<span id="prezzo">60.01</span></p>
+        <p>Quantità: <input type="number" id="quantita" min="1" value="1"></p>
+        <button class="btn btn-primary" onclick="aggiungiAlCarrello()">Aggiungi al Carrello</button>
+
+        <button class="btn btn-primary mt-3" onclick="location.href='Homepage.html'">Torna alla home page</button>
+
+    </div>
+
+    <script>
+        // Funzione per aggiungere un prodotto al carrello
+        function aggiungiAlCarrello() {
+            var nomeProdotto = "TF Prime Steve";
+            var quantita = parseInt(document.getElementById("quantita").value);
+            var prezzoUnitario = parseFloat(document.getElementById("prezzo").innerText);
+            var prezzoTotale = quantita * prezzoUnitario;
+            var prodotto = { nome: nomeProdotto, quantita: quantita, prezzo: prezzoTotale };
+            
+            // Salvataggio nel localStorage
+            var carrello = JSON.parse(localStorage.getItem('carrello')) || [];
+            carrello.push(prodotto);
+            localStorage.setItem('carrello', JSON.stringify(carrello));
+
+            alert("Hai aggiunto " + quantita + " prodotto/i al carrello. Totale: €" + prezzoTotale.toFixed(2));
+        }
+    </script>
+</body>
+</html>

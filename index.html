@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="it">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="stile.css">
+    <style>
+      .button {
+        display: inline-block;
+        padding: 10px 20px;
+        font-size: 20px;
+        cursor: pointer;
+        text-align: center;
+        text-decoration: none;
+        outline: none;
+        color: #fff;
+        background-color: #6c4e88;
+        border: none;
+        border-radius: 15px;
+        box-shadow: 0 9px #999;
+      }
+
+      .button:hover {
+        background-color: #6c4e88
+      }
+
+      .button:active {
+        background-color: #6c4e88;
+        box-shadow: 0 5px #666;
+        transform: translateY(4px);
+      }
+
+      .button:hover .text {
+        display: none;
+      }
+
+      .button:hover .hover-text {
+        display: inline;
+      }
+
+      .hover-text {
+        display: none;
+      }
+
+      .button2 {
+        display: inline-block;
+        padding: 10px 20px;
+        font-size: 20px;
+        cursor: pointer;
+        text-align: center;
+        text-decoration: none;
+        outline: none;
+        color: #fff;
+        background-color: #c02929;
+        border: none;
+        border-radius: 15px;
+        box-shadow: 0 9px #999;
+      }
+
+      .button2:hover {
+        background-color: #c02929
+      }
+
+      .button2:active {
+        background-color: #c02929;
+        box-shadow: 0 5px #666;
+        transform: translateY(4px);
+      }
+
+      .button2:hover .text {
+        display: none;
+      }
+
+      .button2:hover .hover-text {
+        display: inline;
+      }
+
+      .hover-text {
+        display: none;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+      <a class="navbar-brand" href="#">Portfolio di Bolognese Riccardo</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="#about">Chi Sono</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#projects">Progetti</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#skills">Competenze</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#contact">Contatti</a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+    <!-- Hero Section -->
+    <header class="hero bg-primary text-white text-center">
+      <div class="container">
+        <h1 class="display-4">Benvenuto nel Mio Portfolio!</h1>
+        <p class="lead">Il mio nome è Riccardo Bolognese e sono uno studente dell'Istituto Montani di Fermo, in questa pagina ti mostrerò Tutti i miei progetti e competenze che ho sviluppato in questi anni di studio.</p>
+      </div>
+    </header>
+    <!-- About Section -->
+    <section id="about" class="py-5">
+      <div class="container">
+        <h2 class="text-center">Chi Sono?</h2>
+        <p class="text-center">Sono un studente con passione per il Web-Design.</p>
+      </div>
+    </section>
+    <!-- Projects Section -->
+    <section id="projects" class="py-5 bg-light">
+      <div class="container">
+        <h2 class="text-center">Progetti</h2>
+        <div class="row">
+          <div class="col-md-4">
+            <div class="card mb-4 shadow-sm">
+                <a href="ws/grph/menu.html">
+                    <img src="assets/img/pg_01.jpg" class="card-img-top" alt="Progetto 3">
+                  </a>
+              <div class="card-body">
+                <h5 class="card-title">Percorsi minimi</h5>
+                <p class="card-text">Sito Web dove l'utente potrà testare 4 tipi di logiche per il calcolo del percorso minimo in differenti grafici.</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="card mb-4 shadow-sm">
+                <a href="ws/ecmtf/Homepage.html">
+                    <img src="assets/img/pg_02.jpg" class="card-img-top" alt="Progetto 3">
+                  </a>
+              <div class="card-body">
+                <h5 class="card-title">Template di un sito E-commerce</h5>
+                <p class="card-text">Template di un sito E-commerce dove l'utente potrà simulare le varie funzioni di esso.</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="card mb-4 shadow-sm">
+              <a href="https://pl4stica.github.io/TheAlveareED0.io/">
+                <img src="assets/img/pg_03.jpg" class="card-img-top" alt="Progetto 3">
+              </a>
+              <div class="card-body">
+                <h5 class="card-title">Edizione 0 dell'Alveare</h5>
+                <p class="card-text">Pagina della prima edizione del giornalino scolastico del Istituto Montani di Fermo, creato dagli studenti.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- Skills Section -->
+    <section id="skills" class="py-5">
+      <div class="container">
+        <h2 class="text-center">Le mie competenze</h2>
+        <br>
+        <div class="row">
+          <div class="col-md-3">
+            <ul>
+              <li>Bash</li>
+              <li>C</li>
+              <li>Phyton</li>
+            </ul>
+          </div>
+          <div class="col-md-3">
+            <ul>
+              <li>Java</li>
+              <li>Javascript</li>
+              <li>HTML</li>
+            </ul>
+          </div>
+          <div class="col-md-3">
+            <ul>
+              <li>CSS</li>
+              <li>Bootstrap</li>
+              <li>PHP/Smiley</li>
+            </ul>
+          </div>
+          <div class="col-md-3">
+            <ul>
+              <li>LateX</li>
+              <li>Arduino</li>
+              <li>Assembly</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- Contact Section -->
+    <section id="contact" class="py-5 bg-light">
+      <div class="container">
+        <h2 class="text-center">Contatti</h2>
+        <center>
+          <button class="button">
+            <span class="text">Il mio Discord!</span>
+            <span class="hover-text">d4rckcr3cker</span>
+          </button>
+          <button class="button2">
+            <span class="text">La mia E-Mail!</span>
+            <span class="hover-text">atlasoftware.info@gmail.com</span>
+          </button>
+        </center>
+      </div>
+    </section>
+    <!-- Footer -->
+    <footer class="bg-dark text-white text-center py-4">
+      <div class="container">
+        <p>&copy; 2024, Bolognese Riccardo. Tutti i diritti riservati.</p>
+      </div>
+    </footer>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  </body>
+</html>

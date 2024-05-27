@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <!-- Imposta la codifica dei caratteri del documento -->
+    <meta charset="UTF-8">
+    <!-- Rendi il sito responsivo alle dimensioni dei diversi dispositivi -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Titolo della pagina web -->
+    <title>Accesso</title>
+    <!-- Favicon per il sito web -->
+    <link rel="icon" type="image/x-icon" href="assets/icons/favicon.ico">
+    <!-- Framework CSS di Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Stile per la pagina web -->
+    <style>
+        /* Stile per il corpo del documento */
+        body {
+            height: 100%;
+            overflow-y: auto;
+            background-image: url('assets/background/Background.jpg'); 
+            background-size: cover;
+            background-position: center; 
+            background-repeat: no-repeat; 
+        }
+        /* Stile per il contenitore principale */
+        .container {
+            margin-top: 50px;
+            padding: 20px;
+            border-radius: 10px;
+            background-color: rgba(255, 255, 255, 0.9);
+            box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.2);
+        }
+        /* Stile per l'intestazione di livello 2 */
+        h2 {
+            color: #343a40;
+        }
+        /* Stile per il fieldset */
+        fieldset {
+            border: none;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        /* Stile per la legenda */
+        legend {
+            color: #495057;
+            font-size: 1.2rem;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+        /* Stile per le etichette */
+        label {
+            color: #495057;
+            font-weight: bold;
+        }
+        /* Stile per i campi di input di tipo testo */
+        input[type="text"], input[type="password"] {
+            width: 100%;
+            padding: .375rem .75rem;
+            font-size: 1rem;
+            border: 1px solid #495057;
+            border-radius: .25rem;
+            margin-bottom: 10px;
+            transition: border-color 0.2s ease;
+        }
+        /* Stile per i campi di input di tipo testo focalizzati */
+        input[type="text"]:focus, input[type="password"]:focus {
+            border-color: #007bff;
+        }
+        /* Stile per i pulsanti di invio */
+        button[type="submit"], .modal-button {
+            background-color: #007bff;
+            color: #fff;
+            padding: .5rem 1rem;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        /* Stile per l'effetto di hover sui pulsanti di invio */
+        button[type="submit"]:hover, .modal-button:hover {
+            background-color: #0056b3;
+        }
+        /* Stile per il contenitore dei pulsanti */
+        .button-container {
+            text-align: center; 
+            margin-top: 10px;
+        }
+        /* Stile per il contenuto modale */
+        .modal-content {
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body>
+    <br>
+    <!-- Contenitore principale per il contenuto -->
+    <div class="container">
+        <center>
+            <!-- Logo del sito -->
+            <img src="assets/title/title.png" alt="Titolo del sito">
+        </center>
+        <!-- Form di accesso -->
+        <fieldset>
+            <legend>Login</legend>
+            <form id="loginForm">
+                <!-- Campo di input per l'username -->
+                <label for="loginUsername">Nome utente:</label>
+                <input type="text" id="loginUsername" required>
+                <br><br>
+                <!-- Campo di input per la password -->
+                <label for="loginPassword">Password:</label>
+                <input type="password" id="loginPassword" required>
+                <!-- Contenitore del pulsante di accesso -->
+                <div class="button-container text-center">
+                    <button type="submit" class="btn btn-primary">Accedi</button>
+                </div>
+                <br>
+                <!-- Pulsante per aprire il modal di registrazione -->
+                <center>
+                    <button type="button" class="modal-button btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#registrationModal">
+                        Non sei ancora membro? Registrati ora!
+                    </button>
+                </center>
+                <!-- Pulsante per accedere come ospite -->
+                <center>
+                    <button class="modal-button btn btn-outline-primary mt-3" onclick="location.href='Homepage.html'">Accedi come Guest</button>
+                </center>
+            </form>
+        </fieldset>
+        <!-- Modal di registrazione -->
+        <div class="modal fade" id="registrationModal" tabindex="-1" aria-labelledby="registrationModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <!-- Titolo del modal di registrazione -->
+                        <h5 class="modal-title" id="registrationModalLabel">Registrazione</h5>
+                        <!-- Pulsante di chiusura del modal -->
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <!-- Form di registrazione all'interno del modal -->
+                        <form id="registrationForm">
+                            <!-- Campo di input per l'username -->
+                            <label for="username">Nome utente:</label>
+                            <input type="text" id="username" required>
+                            <br><br>
+                            <!-- Campo di input per la password -->
+                            <label for="password">Password:</label>
+                            <input type="password" id="password" required>
+                            <!-- Contenitore del pulsante di registrazione -->
+                            <div class="button-container">
+                                <button type="submit" class="btn btn-dark">Registrati</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- File JavaScript per le funzionalità di accesso e registrazione -->
+    <script src="js/LgRg_LStorage.js"></script>
+    <!-- Bundle JavaScript di Bootstrap -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

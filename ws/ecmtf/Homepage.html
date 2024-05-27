@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <!-- Definizione dei metadati -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Transformers World 2005</title>
+    <!-- Icona del sito -->
+    <link rel="icon" type="image/x-icon" href="assets/icons/favicon.ico">
+    
+    <!-- Collegamento ai fogli di stile -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Stili personalizzati -->
+    <style>
+        /* Stili del corpo della pagina */
+        body {
+            background-color: #f8f9fa;
+            animation: transitionIn 2.00s; /* Animazione all'avvio */
+        }
+        /* Stili della barra di navigazione */
+        .navbar {
+            background-color: #ffffff;
+        }
+        /* Stili per le immagini dei prodotti */
+        .product-img {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+        }
+        /* Stili del piè di pagina */
+        .footer {
+            position: fixed;
+            left: 0;
+            bottom: 0;
+            width: 100%;
+            background-color: #ffffff;
+            color: #000000;
+            text-align: center;
+            padding: 20px 0;
+        }
+        /* Stili per i pulsanti nella barra di navigazione */
+        .search-button {
+            margin-right: 10px; 
+        }
+        .carrello-button {
+            margin-right: 10px;
+        }
+        /* Animazione all'avvio della pagina */
+        @keyframes transitionIn {
+            from {
+                opacity: 0;
+                transform: rotateX(-10deg);
+            }
+            to {
+                opacity: 1;
+                transform: rotateX(-10deg);
+            }
+        }
+        /* Stili per i pulsanti con immagine */
+        .image-button {
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 0;
+        }
+
+        .image-button img {
+            width: 40px;
+            height: auto;
+        }
+    </style>
+</head>
+<body>
+    <!-- Barra di navigazione -->
+    <nav class="navbar navbar-light">
+        <div class="container">
+            <a class="navbar-brand" href="#">Transformers World 2005</a>
+            <!-- Form di ricerca e pulsanti -->
+            <div class="d-flex align-items-center">
+                <form class="d-flex me-auto" id="searchForm">
+                    <input class="form-control me-2" type="search" placeholder="Cerca prodotti" aria-label="Search" id="searchInput">
+                    <button class="btn btn-outline-primary search-button" type="submit">Cerca</button>
+                </form>
+                <!-- Pulsanti per il carrello, login e pagamenti -->
+                <div class="d-flex align-items-center">
+                    <button class="btn btn-primary carrello-button me-2" onclick="accessoCarrello()">Carrello</button>
+                    <button id="loginButton" class="btn btn-primary" onclick="location.href='Login.html'">Login</button>
+                    <button class="image-button" onclick="location.href='bancomat.html'">
+                        <img src="assets/buttons/bancomat.png" alt="Icona">
+                    </button>
+                    <span id="loggedInUser" class="ms-2"></span>
+                </div>
+            </div>
+        </div>
+    </nav>
+    <!-- Contenuto principale della pagina -->
+    <br>
+    <br>
+    <div class="container">
+        <div class="row row-cols-1 row-cols-md-3 g-4" id="productContainer"></div>
+    </div>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <!-- Piè di pagina -->
+    <footer class="footer">
+        <div class="container">
+            <p>@2024 Atlas Software, Seguici sui nostri social! Instagram: TFW2005</p>
+        </div>
+    </footer>
+
+    <!-- Collegamento ai file JavaScript -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Array di prodotti
+        const products = [
+            // Definizione degli oggetti prodotto con id, nome, immagine e link
+            { id: 1, name: "TFDOTM Sentinel Prime", image: "assets/items/item_1.jpg", link: "item_1.html" },
+            { id: 2, name: "TF One Optimus Prime", image: "assets/items/item_2.jpg", link: "item_2.html" },
+            { id: 3, name: "TF07 Cliffjumper", image: "assets/items/item_3.jpg", link: "item_3.html" },
+            { id: 4, name: "Protoform Optimus Prime", image: "assets/items/item_4.jpg", link: "item_4.html" },
+            { id: 5, name: "TF07 Optimus Prime", image: "assets/items/item_5.jpg", link: "item_5.html" },
+            { id: 6, name: "TF Animated Optimus Prime", image: "assets/items/item_6.jpg", link: "item_6.html" },
+            { id: 7, name: "TFAOE Stinger", image: "assets/items/item_7.jpg", link: "item_7.html" },
+            { id: 8, name: "TFFOC Bumblebee", image: "assets/items/item_8.jpg", link: "item_8.html" },
+            { id: 9, name: "TF Prime Steve", image: "assets/items/steve.jpg", link: "steve.html" }
+        ];
+
+        const container = document.getElementById('productContainer');
+
+        // Funzione per generare le card dei prodotti
+        function generateProductCards(products) {
+            container.innerHTML = '';
+            products.forEach(product => {
+                const html = `
+                    <div class="col">
+                        <div class="card h-100">
+                            <img src="${product.image}" class="card-img-top product-img" alt="${product.name}">
+                            <div class="card-body">
+                                <h5 class="card-title">${product.name}</h5>
+                                <p class="card-text">Action figure della famosa serie "Transformers"</p>
+                                <a href="${product.link}" class="btn btn-primary">Acquista ora</a>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                container.innerHTML += html;
+            });
+        }
+
+        // Funzione eseguita all'avvio della pagina
+        window.onload = function() {
+            generateProductCards(products);
+            checkLoginStatus();
+        }
+
+        const searchForm = document.getElementById('searchForm');
+        const searchInput = document.getElementById('searchInput');
+
+        // Gestione della ricerca dei prodotti
+        searchForm.addEventListener('submit', function(event) {
+            event.preventDefault();
+            const searchTerm = searchInput.value.toLowerCase();
+            const filteredProducts = products.filter(product => product.name.toLowerCase().includes(searchTerm));
+            generateProductCards(filteredProducts);
+        });
+
+        // Funzione per verificare lo stato di login dell'utente
+        function checkLoginStatus() {
+            const loggedInUser = localStorage.getItem('loggedInUser');
+            const loggedInUserSpan = document.getElementById('loggedInUser');
+            if (loggedInUser) {
+                loggedInUserSpan.textContent = loggedInUser;
+                document.getElementById('loginButton').setAttribute('disabled', true);
+            } else {
+                loggedInUserSpan.textContent = ''; // Rimuovi il testo se non c'è un utente loggato
+            }
+        }
+
+        // Funzione per l'accesso al carrello
+        function accessoCarrello() {
+            const loggedInUser = localStorage.getItem('loggedInUser');
+            if (!loggedInUser) {
+                alert('Effettua il login per accedere al carrello.');
+            } else {
+                document.getElementById('loggedInUser').textContent = loggedInUser;
+                document.getElementById('loginButton').setAttribute('disabled', true);
+                location.href = 'Carrello.html';
+            }
+        }
+    </script>
+</body>
+</html>
